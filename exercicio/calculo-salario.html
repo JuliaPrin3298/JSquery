@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Bootstrap - Aula</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning  sticky-top">
+        <a class="navbar-brand" href="index.html">Atividade</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html" title="Página inicial">
+                        <i class="bi bi-house"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="calculo-salario.html" title="Calculo">
+                        <i class="bi bi-calculator"></i>
+                        Calculos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="api.html" title="API">
+                        <i class="bi bi-gitlab"></i>
+                        API
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <div class="container mt-5">
+            <h2>Cálculo de Salário</h2>
+            <form id="form-salario">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="idade">Idade:</label>
+                    <input type="number" class="form-control" id="idade" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="salario">Salário Bruto (R$):</label>
+                    <input type="number" class="form-control" id="salario" step="0.5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dependentes">Número de Dependentes:</label>
+                    <input type="number" class="form-control" id="dependentes" min="0" required>
+                </div>
+
+                <button type="button" class="btn btn-light bg-warning" id="btn-calcular">Calcular</button>
+            </form>
+        </div>
+
+        <div id="resultado" class="alert alert-info mt-4 d-none" role="alert">
+            <h4 class="alert-heading">Cálculo Realizado com Sucesso!</h4>
+            <p><strong>Nome:</strong> <span id="res-nome"></span></p>
+            <p><strong>Nº de Dependentes:</strong> <span id="res-dependentes"></span></p>
+            <p><strong>Salário Bruto:</strong> R$ <span id="res-bruto"></span></p>
+            <p><strong>INSS (8%):</strong> R$ <span id="res-inss"></span></p>
+            <p><strong>Vale Transporte (5%):</strong> R$ <span id="res-vt"></span></p>
+            <hr>
+            <p class="mb-0"><strong>Salário Líquido:</strong> R$ <span id="res-liquido"></span></p>
+        </div>
+
+
+    </div>
+
+    <script>
+  document.getElementById("btn-calcular").addEventListener("click", function () {
+    const nome = document.getElementById("nome").value;
+    const idade = parseInt(document.getElementById("idade").value);
+    const salarioBruto = parseFloat(document.getElementById("salario").value);
+    const dependentes = parseInt(document.getElementById("dependentes").value);
+
+    if (!nome || isNaN(idade) || isNaN(salarioBruto) || isNaN(dependentes)) {
+      alert("Preencha todos os campos corretamente.");
+      return;
+    }
+
+    const bonusIdade = idade > 50 ? 300 : 200;
+    const inss = salarioBruto * 0.08;
+    const vt = salarioBruto * 0.05;
+    const valorDependentes = dependentes * 50;
+    const salarioLiquido = salarioBruto - inss - vt + bonusIdade + valorDependentes;
+
+    // Preenche os valores no alerta
+    document.getElementById("res-nome").textContent = nome;
+    document.getElementById("res-dependentes").textContent = dependentes;
+    document.getElementById("res-bruto").textContent = salarioBruto.toFixed(2);
+    document.getElementById("res-inss").textContent = inss.toFixed(2);
+    document.getElementById("res-vt").textContent = vt.toFixed(2);
+    document.getElementById("res-liquido").textContent = salarioLiquido.toFixed(2);
+
+    // Mostra o alerta
+    document.getElementById("resultado").classList.remove("d-none");
+  });
+</script>
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</body>
+
+</html>
